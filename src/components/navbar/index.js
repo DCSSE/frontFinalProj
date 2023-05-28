@@ -7,7 +7,43 @@ import { SearchBox } from '../searchbox';
 import { Favorites } from '../favorites';
 
 
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hasError: false,
+            error: null,
+            errorInfo: null,
+        };
+    }
+
+    componentDidCatch(error, errorInfo) {
+        this.setState({
+            hasError: true,
+            error: error,
+            errorInfo: errorInfo,
+        });
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return (
+                <div>
+                    <h2>Something went wrong.</h2>
+                    <p>{this.state.error && this.state.error.toString()}</p>
+                    <p>Component Stack Error Details:</p>
+                    <pre>{this.state.errorInfo.componentStack}</pre>
+                </div>
+            );
+        }
+
+        return this.props.children;
+    }
+}
+
+
 export const Header = () => {
+
     const search = useRef(null);
     const favlist = useRef(null);
     const { list } = useSelector(state => state)
@@ -60,5 +96,13 @@ export const Header = () => {
             </div>
         </header>
     )
-}
+};
+
+const HeaderWithErrorBoundary = () => (
+    <ErrorBoundary>
+        <Header />
+    </ErrorBoundary>
+);
+
+export default HeaderWithErrorBoundary;
 

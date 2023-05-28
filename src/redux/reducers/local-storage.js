@@ -1,3 +1,31 @@
+// import {
+//     addToList,
+//     listIsEmpty,
+//     localStorageAction, localStorageDeleteAction, localStorageIntialAction,
+//     removeToList,
+//     searchIntialValueAction,
+//     updateListTitle
+// } from "../actions/action";
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// const mapDispatchToProps = (dispatch) => {
+//     return bindActionCreators(
+//         {
+//             getMovies,
+//             addToList,
+//             removeToList,
+//             listIsEmpty,
+//             searchIntialValueAction,
+//             updateListTitle,
+//             localStorageAction,
+//             localStorageDeleteAction,
+//             localStorageIntialAction
+//         },
+//         dispatch
+//     );
+// };
+// export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
+
 export const localStorageReducer = (state = [], action) => {
     if (action.type === 'GET_ITEM') {
         localStorage.setItem("mylist", JSON.stringify([...state, ...action.payload]))
